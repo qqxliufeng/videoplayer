@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#fff"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/dp_10"
+    android:paddingLeft="@dimen/dp_10"
+    android:paddingRight="@dimen/dp_10">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/test_img2" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/dp_10">
+
+            <TextView
+                android:id="@+id/mTvSearchItemTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="中餐厅 第一季"
+                android:textColor="@color/blackTextColor"
+                android:textSize="@dimen/sp_16" />
+
+            <TextView
+                android:id="@+id/mTvSearchItemDes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/mTvSearchItemTitle"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="湖南卫视  综艺  内地"
+                android:textColor="@color/grayTextColor2"
+                android:textSize="@dimen/sp_14" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/mTvSearchItemDes"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="赵薇 黄晓明 周冬雨 张亮"
+                android:textColor="@color/grayTextColor2"
+                android:textSize="@dimen/sp_14" />
+
+            <Button
+                android:layout_width="120dp"
+                android:layout_height="30dp"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/shape_bt_4"
+                android:text="立即播放"
+                android:textColor="#fff" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/grayTextColor"
+            android:text="2017-09-30 第11期：赵薇黄晓明成装出席答谢宴"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textSize="@dimen/sp_12"
+            android:ellipsize="end"
+            android:background="@drawable/shape_ctv_bg1"/>
+
+        <TextView
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/grayTextColor"
+            android:text="2017-09-30 第11期：赵薇黄晓明成装出席答谢宴"
+            android:maxLines="1"
+            android:textSize="@dimen/sp_12"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:background="@drawable/shape_ctv_bg1"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_12"
+            android:textColor="@color/red"
+            android:text="查看更多"
+            android:padding="@dimen/dp_10"
+            android:gravity="center"/>
+
+    </LinearLayout>
+
+</LinearLayout>

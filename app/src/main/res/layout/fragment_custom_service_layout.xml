@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/lineColor" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#fff"
+        android:padding="@dimen/dp_10">
+
+        <TextView
+            android:id="@+id/mTvCustomServiceQQ"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="客服QQ：暂无"
+            android:textColor="@color/blackTextColor"
+            android:textSize="@dimen/sp_14" />
+
+        <TextView
+            android:id="@+id/mTvCustomServiceCopyQQ"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="复制QQ" />
+
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/lineColor" />
+
+    <EditText
+        android:id="@+id/mEtCustomServiceFeedBack"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="#fff"
+        android:gravity="top"
+        android:hint="请填写您的反馈及建议"
+        android:maxLines="5"
+        android:padding="@dimen/dp_10"
+        android:textColor="@color/grayTextColor2"
+        android:textSize="@dimen/sp_12" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_10"
+        android:background="@color/lineColor" />
+
+    <EditText
+        android:id="@+id/mEtCustomServiceQQ"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:hint="QQ号"
+        android:padding="@dimen/dp_10"
+        android:textColor="@color/blackTextColor"
+        android:textSize="@dimen/sp_14" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_10"
+        android:background="@color/lineColor" />
+
+    <EditText
+        android:id="@+id/mEtCustomServiceWX"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:hint="微信号"
+        android:padding="@dimen/dp_10"
+        android:textColor="@color/blackTextColor"
+        android:textSize="@dimen/sp_14" />
+
+    <Button
+        android:id="@+id/mBtCustomService"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/shape_bt_2"
+        android:text="提交反馈"
+        android:textColor="#fff" />
+
+</LinearLayout>

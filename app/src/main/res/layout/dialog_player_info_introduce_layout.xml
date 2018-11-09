@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#fff"
+        android:orientation="vertical"
+        android:padding="@dimen/dp_10">
+
+        <TextView
+            android:id="@+id/mTvPlayerInfoIntroduceTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableRight="@drawable/img_down_icon"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:singleLine="true"
+            tools:text="凉生，我们可不可以不忧伤"
+            android:textColor="@color/blackTextColor"
+            android:textSize="@dimen/sp_16" />
+
+        <TextView
+            android:id="@+id/mTvPlayerInfoIntroduceCrumbs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            tools:text="8.5分.全70集.5012万次播放"
+            android:textColor="@color/grayTextColor2" />
+
+        <TextView
+            android:id="@+id/mTvPlayerInfoIntroduceDes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            tools:text="内地 2018 爱情、都市"
+            android:textColor="@color/grayTextColor2" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/dp_10"
+            android:background="@color/lineColor" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="简介"
+            android:textColor="@color/blackTextColor"
+            android:textSize="@dimen/sp_16" />
+
+        <TextView
+            android:id="@+id/mTvPlayerInfoIntroduceIntroduce"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            tools:text="童年贫瘠的时光，姜生和凉生相依相偎，尽管是没有血缘的兄妹，仍对此不离不弃，物质虽然匮乏，精神却是
+无比充实。他们双双考入理想大学后一场车祸，凉生失踪，由此揭开了凉生的身世之谜。童年贫瘠的时光，姜生和凉生相依相偎，尽管是没有血缘的兄妹，仍对此不离不弃，物质虽然匮乏，精神却是
+无比充实。他们双双考入理想大学后一场车祸，凉生失踪，由此揭开了凉生的身世之谜。童年贫瘠的时光，姜生和凉生相依相偎，尽管是没有血缘的兄妹，仍对此不离不弃，物质虽然匮乏，精神却是
+无比充实。他们双双考入理想大学后一场车祸，凉生失踪，由此揭开了凉生的身世之谜。童年贫瘠的时光，姜生和凉生相依相偎，尽管是没有血缘的兄妹，仍对此不离不弃，物质虽然匮乏，精神却是
+无比充实。他们双双考入理想大学后一场车祸，凉生失踪，由此揭开了凉生的身世之谜。童年贫瘠的时光，姜生和凉生相依相偎，尽管是没有血缘的兄妹，仍对此不离不弃，物质虽然匮乏，精神却是
+无比充实。他们双双考入理想大学后一场车祸，凉生失踪，由此揭开了凉生的身世之谜。"
+            android:textColor="@color/grayTextColor"
+            android:lineSpacingExtra="5dp"
+            android:textSize="@dimen/sp_14" />
+
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

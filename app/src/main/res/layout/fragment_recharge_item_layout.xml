@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="wrap_content"
+                                                   xmlns:tools="http://schemas.android.com/tools"
+                                                   android:background="#fff"
+                                                   android:orientation="vertical"
+                                                   android:paddingLeft="@dimen/dp_10"
+                                                   android:paddingTop="@dimen/dp_10"
+                                                   android:paddingRight="@dimen/dp_10">
+
+    <TextView
+        android:id="@+id/mTvRechargeItemName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:layout_marginRight="100dp"
+        tools:text="一个月的会员"
+        android:textColor="@color/blackTextColor"
+        android:textSize="@dimen/sp_16"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/mTvRechargeItemMoney"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="-20"
+        android:textColor="@color/red"
+        android:textSize="@dimen/sp_16"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_marginTop="@dimen/dp_10"
+        app:layout_constraintTop_toBottomOf="@id/mTvRechargeItemName"
+        android:id="@+id/mTvRechargeItemTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/sp_14"
+        android:textColor="@color/grayTextColor2"
+        tools:text="2018-9-30 15：54"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grayBgColor"
+        android:layout_marginTop="@dimen/dp_10"
+        app:layout_constraintTop_toBottomOf="@id/mTvRechargeItemTime"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/mTvMineTitle"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="#fff"
+        android:gravity="center"
+        android:text="我的"
+        android:textColor="@color/blackTextColor"
+        android:textSize="18sp" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/mLlBottomMineFaceContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp_10">
+
+                <ImageView
+                    android:id="@+id/mIvBottomMineUserFace"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/img_glide_circle_load_default" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="@dimen/dp_10">
+
+                    <TextView
+                        android:id="@+id/mTvBottomMineUserNickName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:text="登录/注册"
+                        android:textColor="@color/red"
+                        android:textSize="@dimen/sp_14" />
+
+                    <TextView
+                        android:id="@+id/mTvMineVip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/mTvBottomMineUserNickName"
+                        android:layout_marginTop="5dp"
+                        android:text="VIP会员（有效期至2019-10-10）"
+                        android:textSize="@dimen/sp_12"
+                        android:visibility="gone" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:background="@color/lineColor" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp_10">
+
+                <LinearLayout
+                    android:id="@+id/mLlMineVip"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/img_vip_icon2" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="VIP会员"
+                            android:textColor="@color/blackTextColor" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="VIP优惠，限时疯抢中！"
+                            android:textColor="#e0b35b"
+                            android:textSize="@dimen/sp_12" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@color/lineColor" />
+
+                <LinearLayout
+                    android:id="@+id/mLlMinePersonalInfo"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/img_info_icon" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="账号资料"
+                            android:textColor="@color/blackTextColor" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="完善资料"
+                            android:textColor="#e0b35b"
+                            android:textSize="@dimen/sp_12" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@color/lineColor" />
+
+            <TextView
+                android:id="@+id/mTvMineGkjl"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="#fff"
+                android:drawableLeft="@drawable/img_gkjl_icon"
+                android:drawableRight="@drawable/img_enter_icon"
+                android:drawablePadding="20dp"
+                android:gravity="center_vertical"
+                android:padding="@dimen/dp_10"
+                android:text="观看记录"
+                android:textColor="@color/blackTextColor"
+                android:textSize="@dimen/sp_14" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/lineColor" />
+
+            <TextView
+                android:id="@+id/mTvMineWdkd"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="#fff"
+                android:drawableLeft="@drawable/img_wdkd_icon"
+                android:drawableRight="@drawable/img_enter_icon"
+                android:drawablePadding="20dp"
+                android:gravity="center_vertical"
+                android:padding="@dimen/dp_10"
+                android:text="我的看单"
+                android:textColor="@color/blackTextColor"
+                android:textSize="@dimen/sp_14" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@color/lineColor" />
+
+            <TextView
+                android:id="@+id/mTvMineZxkf"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="#fff"
+                android:drawableLeft="@drawable/img_zxkf_icon"
+                android:drawableRight="@drawable/img_enter_icon"
+                android:drawablePadding="20dp"
+                android:gravity="center_vertical"
+                android:padding="@dimen/dp_10"
+                android:text="在线客服"
+                android:textColor="@color/blackTextColor"
+                android:textSize="@dimen/sp_14" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/lineColor" />
+
+            <TextView
+                android:id="@+id/mTvMineMzsm"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="#fff"
+                android:drawableLeft="@drawable/img_mzsm_icon"
+                android:drawableRight="@drawable/img_enter_icon"
+                android:drawablePadding="20dp"
+                android:gravity="center_vertical"
+                android:padding="@dimen/dp_10"
+                android:text="免责声明"
+                android:textColor="@color/blackTextColor"
+                android:textSize="@dimen/sp_14" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/lineColor" />
+
+            <TextView
+                android:id="@+id/mTvMineSetting"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="#fff"
+                android:drawableLeft="@drawable/img_setting_icon"
+                android:drawableRight="@drawable/img_enter_icon"
+                android:drawablePadding="20dp"
+                android:gravity="center_vertical"
+                android:padding="@dimen/dp_10"
+                android:text="设置"
+                android:textColor="@color/blackTextColor"
+                android:textSize="@dimen/sp_14" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/lineColor" />
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>

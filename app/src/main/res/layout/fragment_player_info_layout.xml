@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+    <com.android.ql.lf.videoplayer.ui.widgets.QLGSYVideoPlayer
+        android:id="@+id/mVideoPlayer"
+        android:layout_width="match_parent"
+        android:layout_height="210dp"/>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#fff"
+            app:elevation="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/dp_10"
+                app:layout_scrollFlags="scroll">
+
+                <TextView
+                    android:id="@+id/mTvPlayerInfoName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    tools:text="凉生，我们可不可以不忧伤"
+                    android:textColor="@color/blackTextColor"
+                    android:textSize="20dp" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10">
+
+                    <TextView
+                        android:id="@+id/mTvPlayerInfoCrumbs"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="8.5分.全70集.5012万次播放"
+                        android:textColor="@color/grayTextColor2" />
+
+                    <TextView
+                        android:id="@+id/mTvPlayerInfoIntroduce"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:drawableRight="@drawable/img_right_icon"
+                        android:drawablePadding="@dimen/dp_10"
+                        android:text="简介"
+                        android:textColor="@color/grayTextColor2" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/mTvPlayerInfoAddMenu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:drawableLeft="@drawable/img_add_record_icon1"
+                    android:drawablePadding="@dimen/dp_10"
+                    android:text="加入看单"
+                    android:textColor="@color/blackTextColor"
+                    android:textSize="@dimen/sp_16" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:background="@color/lineColor" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="剧集"
+                        android:textColor="@color/blackTextColor" />
+
+                    <TextView
+                        android:id="@+id/mTvPlayerInfoMenuCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:drawableRight="@drawable/img_right_icon"
+                        android:drawablePadding="@dimen/dp_10"
+                        android:text="全0集"
+                        android:textColor="@color/grayTextColor" />
+                </RelativeLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/mRvPlayerInfoMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_marginTop="@dimen/dp_10" />
+
+                <TextView
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="热门推荐"
+                    android:textColor="@color/blackTextColor"
+                    android:textSize="@dimen/sp_14" />
+
+            </LinearLayout>
+
+
+        </android.support.design.widget.AppBarLayout>
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/id_srl_base_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#fff"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/id_rv_base_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+    </android.support.design.widget.CoordinatorLayout>
+
+</LinearLayout>

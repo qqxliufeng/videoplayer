@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent" android:layout_height="wrap_content"
+              android:background="#fff"
+              android:orientation="horizontal"
+              android:padding="@dimen/dp_10">
+
+    <CheckedTextView
+            android:id="@+id/mCtvRecordItemSelect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:layout_marginRight="5dp"
+            android:drawableLeft="@drawable/selector_ctv_icon"
+            android:padding="@dimen/dp_10"/>
+
+    <ImageView
+            android:id="@+id/mIvRecordItemPic"
+            android:layout_width="120dp"
+            android:layout_height="80dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img_glide_load_default"/>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+        <TextView
+                android:id="@+id/mTvRecordItemName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="3"
+                tools:text="凉生我们可不可以不忧伤"
+                android:textColor="@color/grayTextColor"
+                android:textSize="@dimen/sp_14"/>
+
+        <TextView
+                android:id="@+id/mTvRecordItemSeek"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                tools:text="播放到68%"
+                android:visibility="gone"
+                android:textColor="@color/grayTextColor2"
+                android:textSize="@dimen/sp_12"/>
+    </LinearLayout>
+
+
+</LinearLayout>

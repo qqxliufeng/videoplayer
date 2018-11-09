@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+
+    <com.android.ql.lf.baselibaray.ui.widgets.NoScrollViewPager
+        android:id="@+id/mVpTest"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="?actionBarSize" />
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/mTlTest"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:layout_alignParentBottom="true"
+        android:background="#fff"
+        app:tabIndicatorHeight="0dp"
+        app:tabTextColor="#333"
+        app:tabSelectedTextColor="#f00"/>
+
+</RelativeLayout>

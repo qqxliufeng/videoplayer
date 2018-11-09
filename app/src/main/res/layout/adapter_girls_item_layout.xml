@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:tools="http://schemas.android.com/tools"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="wrap_content"
+                                                   android:layout_marginRight="2dp"
+                                                   android:layout_marginLeft="2dp"
+                                                   android:orientation="vertical">
+
+
+    <ImageView
+            android:id="@+id/mIvGirlItemPic"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/img_glide_load_default"/>
+
+    <TextView
+            android:id="@+id/mTvGirlsItemTag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/shape_tv_3"
+            tools:text="清纯"
+            android:textColor="#fff"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_tv_4"
+            android:text="真人认证"
+            android:textColor="#fe458e"
+            android:drawablePadding="5dp"
+            android:textSize="@dimen/sp_12"
+            android:drawableLeft="@drawable/img_girl_renzheng_icon"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginBottom="40dp"
+            app:layout_constraintBottom_toBottomOf="@id/mIvGirlItemPic"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <TextView
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_tv_4"
+            android:text="可视频"
+            android:textColor="#0dd1cb"
+            android:drawablePadding="5dp"
+            android:drawableLeft="@drawable/img_girl_shiping_icon"
+            android:textSize="@dimen/sp_12"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginBottom="10dp"
+            app:layout_constraintBottom_toBottomOf="@id/mIvGirlItemPic"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <TextView
+            android:id="@+id/mTvGirlsItemName"
+            app:layout_constraintTop_toBottomOf="@id/mIvGirlItemPic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_14"
+            android:padding="@dimen/dp_10"
+            android:textColor="@color/blackTextColor"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:layout_marginRight="70dp"
+            tools:text="阳光sunshine"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/mIvGirlItemPic"
+            android:layout_margin="@dimen/dp_10"
+            android:background="@drawable/shape_tv_5"
+            android:paddingLeft="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_10"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:textColor="#fff"
+            android:textSize="@dimen/sp_12"
+            android:text="• 在线"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginRight="2dp"
+    android:layout_marginLeft="2dp"
+    android:layout_marginBottom="@dimen/dp_10">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/mIvFilmItemPic"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:scaleType="centerCrop"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:padding="@dimen/dp_10">
+            <TextView
+                android:id="@+id/mTvFilmItemQuality"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="高清"
+                android:textSize="@dimen/sp_12"
+                android:textColor="#fff"/>
+            <TextView
+                android:id="@+id/mTvFilmItemGrade"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="9.0"
+                android:textSize="@dimen/sp_12"
+                android:textColor="#fff"/>
+        </RelativeLayout>
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/mTvFilmItemName"
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/sp_14"
+        tools:text="斗破苍穹斗破苍穹斗破苍穹斗破苍穹斗破苍穹"
+        android:textColor="@color/blackTextColor"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:ellipsize="end"/>
+
+    <TextView
+        android:id="@+id/mTvFilmItemContent"
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/sp_12"
+        tools:text="吴磊林允热血闯江湖吴磊林允热血闯江湖"
+        android:textColor="@color/grayTextColor"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:ellipsize="end"/>
+
+</LinearLayout>

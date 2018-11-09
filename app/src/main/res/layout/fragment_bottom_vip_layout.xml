@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/id_srl_base_recycler_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/mAlVipContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:elevation="0dp"
+            android:background="@android:color/transparent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_scrollFlags="scroll">
+
+                <com.youth.banner.Banner
+                        android:id="@+id/mBannerFilmItem"
+                        android:layout_width="match_parent"
+                        android:layout_height="160dp" />
+
+                <com.sunfusheng.marqueeview.MarqueeView
+                        android:paddingLeft="@dimen/dp_10"
+                        android:id="@+id/mMarqueeViewFileItem"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:background="@color/grayBgColor"
+                        app:mvAnimDuration="1000"
+                        app:mvDirection="bottom_to_top"
+                        app:mvInterval="3000"
+                        app:mvTextColor="@color/blackTextColor"
+                        app:mvTextSize="14sp"
+                        app:mvSingleLine="true"/>
+
+
+                <ImageView
+                    android:id="@+id/mIvVipRecharge"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/img_vip_img" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/dp_10">
+
+                    <View
+                        android:layout_width="5dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/shape_view_1" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:text="美艳女主VIP专区"
+                        android:textColor="@color/blackTextColor" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </android.support.design.widget.AppBarLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/id_rv_base_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    </android.support.design.widget.CoordinatorLayout>
+
+</android.support.v4.widget.SwipeRefreshLayout>
