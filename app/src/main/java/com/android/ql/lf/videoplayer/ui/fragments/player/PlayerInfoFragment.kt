@@ -10,19 +10,30 @@ import com.android.ql.lf.baselibaray.ui.fragment.BaseRecyclerViewFragment
 import com.android.ql.lf.baselibaray.utils.GlideManager
 import com.android.ql.lf.videoplayer.R
 import com.android.ql.lf.videoplayer.data.vip.FilmBean
+import com.android.ql.lf.videoplayer.ui.activities.PlayerActivity
 import com.android.ql.lf.videoplayer.ui.fragments.films.FilmIntroduceDialogFragment
 import com.android.ql.lf.videoplayer.ui.fragments.films.FilmMenuFragment
+import com.android.ql.lf.videoplayer.ui.fragments.vip.ChargeVipFragment
 import com.android.ql.lf.videoplayer.utils.*
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.google.gson.Gson
 import com.shuyu.gsyvideoplayer.video.GSYSampleADVideoPlayer
+import com.shuyu.gsyvideoplayer.video.base.GSYBaseVideoPlayer
 import kotlinx.android.synthetic.main.fragment_player_info_layout.*
+import org.jetbrains.anko.bundleOf
 import org.jetbrains.anko.support.v4.toast
 import org.json.JSONObject
 
 class PlayerInfoFragment : BaseRecyclerViewFragment<FilmBean>() {
 
+    companion object {
+        fun getPlayerInfoInstance(vid: Int): PlayerInfoFragment {
+            val playerInfoFragment = PlayerInfoFragment()
+            playerInfoFragment.arguments = bundleOf(Pair("vid", vid))
+            return playerInfoFragment
+        }
+    }
 
     private val mCollectionList = arrayListOf<VideoCollectionBean>()
     private val mAdList = arrayListOf<VideoAdBean>()
@@ -42,6 +53,8 @@ class PlayerInfoFragment : BaseRecyclerViewFragment<FilmBean>() {
     private val mIntroduceDialogFragment: FilmIntroduceDialogFragment by lazy {
         FilmIntroduceDialogFragment()
     }
+
+    public fun getPlayer():GSYBaseVideoPlayer = mVideoPlayer
 
 
     override fun createAdapter(): BaseQuickAdapter<FilmBean, BaseViewHolder> =
@@ -77,10 +90,30 @@ class PlayerInfoFragment : BaseRecyclerViewFragment<FilmBean>() {
     private fun initVideo() {
         (mVideoPlayer.layoutParams as ViewGroup.MarginLayoutParams).topMargin = statusBarHeight
         mVideoPlayer.setOnOpenVipListener {
-            toast("开通VIP")
+            ChargeVipFragment.startOpenVip(mContext)
         }
         mVideoPlayer.isVip(false)
-        mVideoPlayer.backButton.setOnClickListener { finish() }
+        mVideoPlayer.setIsTouchWiget(true)
+        //关闭自动旋转
+        mVideoPlayer.isRotateViewAuto = false
+        mVideoPlayer.isLockLand = false
+        mVideoPlayer.isShowFullAnimation = false
+        mVideoPlayer.isNeedLockFull = true
+
+        mVideoPlayer.setVideoAllCallBack(mContext as PlayerActivity)
+
+        (mContext as PlayerActivity).initOrientation()
+//        mVideoPlayer.backButton.setOnClickListener { finish() }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mVideoPlayer.currentPlayer.onVideoPause()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mVideoPlayer.currentPlayer.onVideoResume()
     }
 
     override fun onRequestStart(requestID: Int) {
@@ -152,6 +185,7 @@ class PlayerInfoFragment : BaseRecyclerViewFragment<FilmBean>() {
                 mCurrentVideoInfo?.video_desc,
                 mCurrentVideoInfo?.video_intro
             )
+            mVideoPlayer.startPlayLogic()
         }
     }
 

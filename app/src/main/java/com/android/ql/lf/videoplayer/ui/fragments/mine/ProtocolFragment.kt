@@ -29,6 +29,7 @@ class ProtocolFragment : BaseNetWorkingFragment() {
                 super.onPageStarted(view, url, favicon)
             }
         }
+        mWbProtocol.webChromeClient = object : WebChromeClient(){}
         mTvProtocol.setOnClickListener {
             finish()
         }
@@ -46,7 +47,7 @@ class ProtocolFragment : BaseNetWorkingFragment() {
         super.onHandleSuccess(requestID, obj)
         obj?.let {
             if (it is String) {
-                mWbProtocol.loadData(it,"text/html;charset=utf-8",null)
+                mWbProtocol.loadData(it, "text/html;charset=utf-8", null)
             }
         }
     }

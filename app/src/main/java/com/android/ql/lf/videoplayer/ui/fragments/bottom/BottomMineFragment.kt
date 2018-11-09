@@ -12,6 +12,7 @@ import com.android.ql.lf.videoplayer.data.user.UserInfoLiveData
 import com.android.ql.lf.videoplayer.data.user.isLogin
 import com.android.ql.lf.videoplayer.ui.fragments.mine.*
 import com.android.ql.lf.videoplayer.ui.fragments.other.SettingFragment
+import com.android.ql.lf.videoplayer.ui.fragments.vip.ChargeVipFragment
 import com.android.ql.lf.videoplayer.utils.doClickWithUserStatusStart
 import kotlinx.android.synthetic.main.fragment_bottom_mine_layout.*
 
@@ -20,7 +21,6 @@ class BottomMineFragment : BaseFragment() {
     override fun getLayoutId() = R.layout.fragment_bottom_mine_layout
 
     override fun initView(view: View?) {
-
         if (UserInfo.isLogin()) {
             GlideManager.loadFaceCircleImage(mContext, UserInfo.user_pic, mIvBottomMineUserFace)
             mTvBottomMineUserNickName.text = UserInfo.user_nickname
@@ -33,6 +33,10 @@ class BottomMineFragment : BaseFragment() {
 
         mLlBottomMineFaceContainer.doClickWithUserStatusStart("") {
             FragmentContainerActivity.from(mContext).setClazz(PersonalInfoFragment::class.java).setNeedNetWorking(true).setTitle("账号资料").start()
+        }
+
+        mLlMineVip.doClickWithUserStatusStart(""){
+            ChargeVipFragment.startOpenVip(mContext)
         }
 
         mLlMinePersonalInfo.doClickWithUserStatusStart(""){

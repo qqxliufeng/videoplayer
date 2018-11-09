@@ -1,6 +1,8 @@
 package com.android.ql.lf.videoplayer.ui.widgets;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.View;
@@ -8,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import android.widget.Toast;
 import com.android.ql.lf.videoplayer.R;
 import com.shuyu.gsyvideoplayer.model.GSYVideoModel;
 import com.shuyu.gsyvideoplayer.utils.CommonUtil;
@@ -22,7 +25,9 @@ import java.util.Map;
 
 public class QLGSYVideoPlayer extends ListGSYVideoPlayer {
 
-    public interface OnOpenVipListener{ public void openVip(); }
+    public interface OnOpenVipListener {
+        public void openVip();
+    }
 
     protected View mJumpAd;
 
@@ -54,27 +59,46 @@ public class QLGSYVideoPlayer extends ListGSYVideoPlayer {
     protected void init(Context context) {
         super.init(context);
         mJumpAd = findViewById(R.id.jump_ad);
+        mJumpAd.setBackgroundColor(Color.parseColor("#55000000"));
         mADTime = (TextView) findViewById(R.id.ad_time);
+        mADTime.setBackgroundColor(Color.parseColor("#55000000"));
         ((TextView) mJumpAd).setText("VIP可关闭广告");
         mWidgetContainer = (ViewGroup) findViewById(R.id.widget_container);
+        findViewById(R.id.fullscreen).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((Activity)getContext()).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                startWindowFullscreen(getContext(),false,false);
+            }
+        });
         if (mJumpAd != null) {
             mJumpAd.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (isVip) {
                         playNext();
-                    }else {
-                        if (onOpenVipListener!=null){
+                    } else {
+                        if (onOpenVipListener != null) {
                             onOpenVipListener.openVip();
                         }
                     }
                 }
             });
         }
+        getBackButton().setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (((Activity)getContext()).getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
+                    ((Activity)getContext()).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                }else {
+                    ((Activity)getContext()).finish();
+                }
+            }
+        });
     }
 
 
-    public void isVip(boolean isVip){
+    public void isVip(boolean isVip) {
         this.isVip = isVip;
     }
 

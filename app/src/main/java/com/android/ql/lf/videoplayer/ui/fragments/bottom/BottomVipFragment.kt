@@ -55,8 +55,7 @@ class BottomVipFragment : BaseRecyclerViewFragment<FilmBean>() {
         (mRecyclerView.layoutParams as ViewGroup.MarginLayoutParams).rightMargin =
                 (mRecyclerView.layoutParams as ViewGroup.MarginLayoutParams).leftMargin
         mIvVipRecharge.doClickWithUserStatusStart("") {
-            FragmentContainerActivity.from(mContext).setClazz(ChargeVipFragment::class.java).setNeedNetWorking(true)
-                .setTitle("充值VIP").start()
+            ChargeVipFragment.startOpenVip(mContext)
         }
     }
 

@@ -14,6 +14,13 @@ import kotlinx.android.synthetic.main.fragment_recharge_vip_layout.*
 
 class ChargeVipFragment : BaseNetWorkingFragment() {
 
+    companion object {
+        fun startOpenVip(context: Context){
+            FragmentContainerActivity.from(context).setClazz(ChargeVipFragment::class.java).setNeedNetWorking(true)
+                .setTitle("充值VIP").start()
+        }
+    }
+
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         setHasOptionsMenu(true)

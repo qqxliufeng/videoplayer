@@ -16,6 +16,7 @@ import com.android.ql.lf.baselibaray.ui.fragment.AbstractLazyLoadFragment
 import com.android.ql.lf.baselibaray.utils.GlideManager
 import com.android.ql.lf.videoplayer.R
 import com.android.ql.lf.videoplayer.data.vip.FilmBean
+import com.android.ql.lf.videoplayer.ui.activities.PlayerActivity
 import com.android.ql.lf.videoplayer.ui.fragments.other.SearchFragment
 import com.android.ql.lf.videoplayer.ui.fragments.player.PlayerInfoFragment
 import com.android.ql.lf.videoplayer.utils.VIDEO_LIST_ACT
@@ -36,9 +37,9 @@ class FilmItemFragment : AbstractLazyLoadFragment<FilmBean>() {
     private val noticeList by lazy { arrayListOf<FilmNoticeBean>() }
 
     companion object {
-        fun newInstance(bannerJSON: String,classify:Int): FilmItemFragment {
+        fun newInstance(bannerJSON: String, classify: Int): FilmItemFragment {
             val filmItemFragment = FilmItemFragment()
-            val bundle = bundleOf(Pair("json", bannerJSON), Pair("classify",classify))
+            val bundle = bundleOf(Pair("json", bannerJSON), Pair("classify", classify))
             filmItemFragment.arguments = bundle
             return filmItemFragment
         }
@@ -47,15 +48,16 @@ class FilmItemFragment : AbstractLazyLoadFragment<FilmBean>() {
 
     override fun getLayoutId() = R.layout.fragment_film_item_layout
 
-    override fun createAdapter() = object : BaseQuickAdapter<FilmBean, BaseViewHolder>(R.layout.adapter_film_item_layout, mArrayList) {
-        override fun convert(helper: BaseViewHolder?, item: FilmBean?) {
-            GlideManager.loadImage(mContext,item?.video_pic,helper?.getView(R.id.mIvFilmItemPic))
-            helper?.setText(R.id.mTvFilmItemQuality,item?.video_definition)
-            helper?.setText(R.id.mTvFilmItemGrade,item?.video_grade)
-            helper?.setText(R.id.mTvFilmItemName,item?.video_name)
-            helper?.setText(R.id.mTvFilmItemContent,item?.video_desc)
+    override fun createAdapter() =
+        object : BaseQuickAdapter<FilmBean, BaseViewHolder>(R.layout.adapter_film_item_layout, mArrayList) {
+            override fun convert(helper: BaseViewHolder?, item: FilmBean?) {
+                GlideManager.loadImage(mContext, item?.video_pic, helper?.getView(R.id.mIvFilmItemPic))
+                helper?.setText(R.id.mTvFilmItemQuality, item?.video_definition)
+                helper?.setText(R.id.mTvFilmItemGrade, item?.video_grade)
+                helper?.setText(R.id.mTvFilmItemName, item?.video_name)
+                helper?.setText(R.id.mTvFilmItemContent, item?.video_desc)
+            }
         }
-    }
 
     override fun initView(view: View?) {
         super.initView(view)
@@ -66,21 +68,32 @@ class FilmItemFragment : AbstractLazyLoadFragment<FilmBean>() {
             val jsonObject = JSONObject(this)
             val bannerJsonArray = jsonObject.optJSONArray("carousel")
             (0 until bannerJsonArray.length()).forEach {
-                bannerList.add(Gson().fromJson(bannerJsonArray.optJSONObject(it).toString(), FilmBannerBean::class.java))
+                bannerList.add(
+                    Gson().fromJson(
+                        bannerJsonArray.optJSONObject(it).toString(),
+                        FilmBannerBean::class.java
+                    )
+                )
             }
 
             val noticeJsonArray = jsonObject.optJSONArray("notice")
             (0 until noticeJsonArray.length()).forEach {
-                noticeList.add(Gson().fromJson(noticeJsonArray.optJSONObject(it).toString(),FilmNoticeBean::class.java))
+                noticeList.add(
+                    Gson().fromJson(
+                        noticeJsonArray.optJSONObject(it).toString(),
+                        FilmNoticeBean::class.java
+                    )
+                )
             }
 
             mBannerFilmItem.setImageLoader(object : ImageLoader() {
                 override fun displayImage(context: Context?, path: Any?, imageView: ImageView?) {
                     imageView?.scaleType = ImageView.ScaleType.CENTER_CROP
-                    GlideManager.loadImage(mContext,path as String,imageView)
+                    GlideManager.loadImage(mContext, path as String, imageView)
                 }
             })
-            mBannerFilmItem.setImages(bannerList.map { it.slideshow_pic }).setDelayTime(3000).setBannerStyle(BannerConfig.CIRCLE_INDICATOR).setOnBannerListener {
+            mBannerFilmItem.setImages(bannerList.map { it.slideshow_pic }).setDelayTime(3000)
+                .setBannerStyle(BannerConfig.CIRCLE_INDICATOR).setOnBannerListener {
 
             }.setIndicatorGravity(BannerConfig.CENTER).start()
 
@@ -93,12 +106,15 @@ class FilmItemFragment : AbstractLazyLoadFragment<FilmBean>() {
             mSwipeRefreshLayout.isEnabled = verticalOffset >= 0
         }
 
-        (mRecyclerView.layoutParams as ViewGroup.MarginLayoutParams).leftMargin = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10.0f, resources.displayMetrics).toInt()
+        (mRecyclerView.layoutParams as ViewGroup.MarginLayoutParams).leftMargin =
+                TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10.0f, resources.displayMetrics).toInt()
 
-        (mRecyclerView.layoutParams as ViewGroup.MarginLayoutParams).rightMargin = (mRecyclerView.layoutParams as ViewGroup.MarginLayoutParams).leftMargin
+        (mRecyclerView.layoutParams as ViewGroup.MarginLayoutParams).rightMargin =
+                (mRecyclerView.layoutParams as ViewGroup.MarginLayoutParams).leftMargin
 
         mLlFilmItemSearchContainer.setOnClickListener {
-            FragmentContainerActivity.from(mContext).setNeedNetWorking(true).setTitle("").setHiddenToolBar(true).setClazz(SearchFragment::class.java).start()
+            FragmentContainerActivity.from(mContext).setNeedNetWorking(true).setTitle("").setHiddenToolBar(true)
+                .setClazz(SearchFragment::class.java).start()
         }
     }
 
@@ -115,8 +131,10 @@ class FilmItemFragment : AbstractLazyLoadFragment<FilmBean>() {
 
     override fun loadData() {
         isLoad = true
-        mPresent.getDataByPost(0x0, getBaseParamsWithPage(VIDEO_MODULE,VIDEO_LIST_ACT,currentPage)
-                .addParam("classify",arguments?.getInt("classify") ?: 0))
+        mPresent.getDataByPost(
+            0x0, getBaseParamsWithPage(VIDEO_MODULE, VIDEO_LIST_ACT, currentPage)
+                .addParam("classify", arguments?.getInt("classify") ?: 0)
+        )
     }
 
     override fun onLoadMore() {
@@ -125,8 +143,8 @@ class FilmItemFragment : AbstractLazyLoadFragment<FilmBean>() {
     }
 
     override fun <T : Any?> onRequestSuccess(requestID: Int, result: T) {
-        if (requestID == 0x0){
-            processList(result as String,FilmBean::class.java)
+        if (requestID == 0x0) {
+            processList(result as String, FilmBean::class.java)
         }
     }
 
@@ -142,18 +160,31 @@ class FilmItemFragment : AbstractLazyLoadFragment<FilmBean>() {
     }
 
     override fun onMyItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
-        FragmentContainerActivity
-                .from(mContext)
-                .setNeedNetWorking(true)
-                .setTitle("")
-                .setExtraBundle(bundleOf(Pair("vid",mArrayList[position].video_id)))
-                .setClazz(PlayerInfoFragment::class.java)
-                .setHiddenToolBar(true)
-                .start()
+        PlayerActivity.startPlayerActivity(mContext, mArrayList[position].video_id)
+//        FragmentContainerActivity
+//                .from(mContext)
+//                .setNeedNetWorking(true)
+//                .setTitle("")
+//                .setExtraBundle(bundleOf(Pair("vid",mArrayList[position].video_id)))
+//                .setClazz(PlayerInfoFragment::class.java)
+//                .setHiddenToolBar(true)
+//                .start()
     }
 
 }
 
-data class FilmBannerBean(val slideshow_id: Int, val slideshow_pic: String, val slideshow_vip: String, val slideshow_name: String, val slideshow_url: String)
+data class FilmBannerBean(
+    val slideshow_id: Int,
+    val slideshow_pic: String,
+    val slideshow_vip: String,
+    val slideshow_name: String,
+    val slideshow_url: String
+)
 
-data class FilmNoticeBean(val notice_id:Int,val notice_name:String,val notice_content:String,val notice_url:String,val notice_vip:Int)
+data class FilmNoticeBean(
+    val notice_id: Int,
+    val notice_name: String,
+    val notice_content: String,
+    val notice_url: String,
+    val notice_vip: Int
+)
