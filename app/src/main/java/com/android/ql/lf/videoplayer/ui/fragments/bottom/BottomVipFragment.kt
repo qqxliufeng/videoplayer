@@ -14,9 +14,14 @@ import com.android.ql.lf.baselibaray.ui.activity.FragmentContainerActivity
 import com.android.ql.lf.baselibaray.ui.fragment.BaseRecyclerViewFragment
 import com.android.ql.lf.baselibaray.utils.GlideManager
 import com.android.ql.lf.videoplayer.R
+import com.android.ql.lf.videoplayer.data.user.UserInfo
+import com.android.ql.lf.videoplayer.data.user.isLogin
+import com.android.ql.lf.videoplayer.data.user.isVip
 import com.android.ql.lf.videoplayer.data.vip.FilmBean
+import com.android.ql.lf.videoplayer.ui.activities.PlayerActivity
 import com.android.ql.lf.videoplayer.ui.fragments.films.FilmBannerBean
 import com.android.ql.lf.videoplayer.ui.fragments.films.FilmNoticeBean
+import com.android.ql.lf.videoplayer.ui.fragments.mine.SelectLoginFragment
 import com.android.ql.lf.videoplayer.ui.fragments.vip.ChargeVipFragment
 import com.android.ql.lf.videoplayer.utils.*
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -100,7 +105,6 @@ class BottomVipFragment : BaseRecyclerViewFragment<FilmBean>() {
         }
     }
 
-
     override fun onHandleSuccess(requestID: Int, obj: Any?) {
         if (obj != null) {
             val jsonObject = obj as JSONObject
@@ -133,6 +137,18 @@ class BottomVipFragment : BaseRecyclerViewFragment<FilmBean>() {
             ).setOnBannerListener {
             }.setIndicatorGravity(BannerConfig.CENTER).start()
             mMarqueeViewFileItem.startWithList(noticeList.map { it.notice_name })
+        }
+    }
+
+    override fun onMyItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
+        if (UserInfo.isLogin()) {
+            if (UserInfo.isVip()) {
+                PlayerActivity.startPlayerActivity(mContext, mArrayList[position].video_id)
+            } else {
+                ChargeVipFragment.startOpenVip(mContext)
+            }
+        } else {
+            SelectLoginFragment.startSelectLoginFragment(mContext)
         }
     }
 }

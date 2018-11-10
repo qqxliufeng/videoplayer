@@ -10,10 +10,13 @@ import com.android.ql.lf.baselibaray.utils.GlideManager
 import com.android.ql.lf.videoplayer.R
 import com.android.ql.lf.videoplayer.data.film.BillBean
 import com.android.ql.lf.videoplayer.data.film.RecordBean
+import com.android.ql.lf.videoplayer.ui.activities.PlayerActivity
 import com.android.ql.lf.videoplayer.utils.*
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import kotlinx.android.synthetic.main.fragment_record_layout.*
+import org.jetbrains.anko.support.v4.toast
+import java.lang.StringBuilder
 
 class BillFragment : BaseRecyclerViewFragment<BillBean>() {
 
@@ -59,6 +62,19 @@ class BillFragment : BaseRecyclerViewFragment<BillBean>() {
             mBaseAdapter.notifyDataSetChanged()
             mTvRecordBottomDelete.text = "删除(${mArrayList.size})"
         }
+        mTvRecordBottomDelete.setOnClickListener { view2 ->
+            if (mArrayList.none { it.isEditMode }) {
+                return@setOnClickListener
+            }
+            val stringBuilder = StringBuilder()
+            mArrayList.filter { it.isEditMode }.forEach {
+                stringBuilder.append(it.bill_id).append(",")
+            }
+            mPresent.getDataByPost(
+                0x1,
+                getBaseParamsWithModAndAct(USER_MODULE, DEL_BILL_ACT).addParam("bid", stringBuilder.toString())
+            )
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
@@ -87,18 +103,39 @@ class BillFragment : BaseRecyclerViewFragment<BillBean>() {
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onRequestStart(requestID: Int) {
+        super.onRequestStart(requestID)
+        if (requestID == 0x1) {
+            getFastProgressDialog("正在删除……")
+        }
+    }
+
+
     override fun <T : Any?> onRequestSuccess(requestID: Int, result: T) {
         if (requestID == 0x0) {
             processList(result as String, BillBean::class.java)
+        } else if (requestID == 0x1) {
+            val check = checkResultCode(result)
+            if (check?.code == SUCCESS_CODE) {
+                toast("删除成功")
+                val tempList = mArrayList.filter { !it.isEditMode }
+                mArrayList.clear()
+                mArrayList.addAll(tempList)
+                mBaseAdapter.notifyDataSetChanged()
+            } else {
+                toast("删除失败")
+            }
         }
     }
 
     override fun onMyItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
         super.onMyItemClick(adapter, view, position)
         if (isEditMode) {
-            mArrayList[position].isEditMode = true
+            mArrayList[position].isEditMode = !mArrayList[position].isEditMode
             mBaseAdapter.notifyItemChanged(position)
             mTvRecordBottomDelete.text = "删除(${mArrayList.filter { it.isEditMode }.size})"
+        } else {
+            PlayerActivity.startPlayerActivity(mContext, mArrayList[position].bill_theme ?: 0)
         }
     }
 }

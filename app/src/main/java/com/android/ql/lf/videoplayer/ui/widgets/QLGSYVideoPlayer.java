@@ -5,9 +5,11 @@ import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import android.widget.Toast;
@@ -67,8 +69,8 @@ public class QLGSYVideoPlayer extends ListGSYVideoPlayer {
         findViewById(R.id.fullscreen).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((Activity)getContext()).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-                startWindowFullscreen(getContext(),false,false);
+                ((Activity) getContext()).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                startWindowFullscreen(getContext(), false, false);
             }
         });
         if (mJumpAd != null) {
@@ -88,13 +90,17 @@ public class QLGSYVideoPlayer extends ListGSYVideoPlayer {
         getBackButton().setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (((Activity)getContext()).getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
-                    ((Activity)getContext()).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-                }else {
-                    ((Activity)getContext()).finish();
+                if (((Activity) getContext()).getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
+                    ((Activity) getContext()).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                } else {
+                    ((Activity) getContext()).finish();
                 }
             }
         });
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) getStartButton().getLayoutParams();
+        params.width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30.0f, getResources().getDisplayMetrics());
+        params.height = params.width;
+        getStartButton().setLayoutParams(params);
     }
 
 

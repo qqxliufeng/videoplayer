@@ -1,5 +1,9 @@
 package com.android.ql.lf.videoplayer.data.vip;
 
+import com.android.ql.lf.videoplayer.ui.fragments.player.VideoCollectionBean;
+
+import java.util.ArrayList;
+
 public class FilmBean {
     private int video_id;
     private String video_name;
@@ -8,6 +12,8 @@ public class FilmBean {
     private int video_vip;
     private String video_definition;
     private String video_grade;
+    private int video_type;
+    private ArrayList<VideoCollectionBean> video_gather;
 
     /** video info  **/
     private String video_play;
@@ -76,6 +82,21 @@ public class FilmBean {
         this.video_grade = video_grade;
     }
 
+    public int getVideo_type() {
+        return video_type;
+    }
+
+    public void setVideo_type(int video_type) {
+        this.video_type = video_type;
+    }
+
+    public ArrayList<VideoCollectionBean> getVideo_gather() {
+        return video_gather;
+    }
+
+    public void setVideo_gather(ArrayList<VideoCollectionBean> video_gather) {
+        this.video_gather = video_gather;
+    }
 
     /** video info  **/
     public String getVideo_play() {

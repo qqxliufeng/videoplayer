@@ -4,10 +4,12 @@ import android.annotation.SuppressLint
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import com.android.ql.lf.baselibaray.component.ApiParams
 import com.android.ql.lf.baselibaray.ui.activity.FragmentContainerActivity
 import com.android.ql.lf.baselibaray.ui.fragment.BaseRecyclerViewFragment
 import com.android.ql.lf.baselibaray.utils.GlideManager
+import com.android.ql.lf.baselibaray.utils.RxBus
 import com.android.ql.lf.videoplayer.R
 import com.android.ql.lf.videoplayer.data.vip.FilmBean
 import com.android.ql.lf.videoplayer.ui.activities.PlayerActivity
@@ -17,6 +19,7 @@ import com.android.ql.lf.videoplayer.ui.fragments.vip.ChargeVipFragment
 import com.android.ql.lf.videoplayer.utils.*
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
+import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.google.gson.Gson
 import com.shuyu.gsyvideoplayer.video.GSYSampleADVideoPlayer
 import com.shuyu.gsyvideoplayer.video.base.GSYBaseVideoPlayer
@@ -40,6 +43,8 @@ class PlayerInfoFragment : BaseRecyclerViewFragment<FilmBean>() {
     private var mCurrentVideoInfo: FilmBean? = null
     private var mCurrentVideoCollectionBean: VideoCollectionBean? = null
 
+    private var mVideoId: Int? = null
+
     private val mMenuAdapter: BaseQuickAdapter<VideoCollectionBean, BaseViewHolder>  by lazy {
         object :
             BaseQuickAdapter<VideoCollectionBean, BaseViewHolder>(R.layout.adapter_menu_item_layout, mCollectionList) {
@@ -54,8 +59,21 @@ class PlayerInfoFragment : BaseRecyclerViewFragment<FilmBean>() {
         FilmIntroduceDialogFragment()
     }
 
-    public fun getPlayer():GSYBaseVideoPlayer = mVideoPlayer
+    public fun getPlayer(): GSYBaseVideoPlayer = mVideoPlayer
 
+    private val menuSubscription by lazy {
+        RxBus.getDefault().toObservable(String::class.java).subscribe {
+            val index = it.toInt() - 1
+            val temp = mCollectionList[index]
+            if (temp.collected_url == mCurrentVideoCollectionBean?.collected_url ?: "" && index == mCollectionList.indexOf(
+                    mCurrentVideoCollectionBean
+                )
+            ) {
+                return@subscribe
+            }
+            play(index)
+        }
+    }
 
     override fun createAdapter(): BaseQuickAdapter<FilmBean, BaseViewHolder> =
         object : BaseQuickAdapter<FilmBean, BaseViewHolder>(R.layout.adapter_player_info_item_layout, mArrayList) {
@@ -68,12 +86,23 @@ class PlayerInfoFragment : BaseRecyclerViewFragment<FilmBean>() {
     override fun getLayoutId() = R.layout.fragment_player_info_layout
 
     override fun initView(view: View?) {
+        mVideoId = arguments?.getInt("vid")
         super.initView(view)
+        menuSubscription
         initVideo()
         setLoadEnable(false)
         setRefreshEnable(false)
         mRvPlayerInfoMenu.layoutManager = LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false)
         mRvPlayerInfoMenu.adapter = mMenuAdapter
+        mRvPlayerInfoMenu.addOnItemTouchListener(object : OnItemClickListener() {
+            override fun onSimpleItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
+                val temp = mCollectionList[position]
+                if (temp.collected_url == mCurrentVideoCollectionBean?.collected_url ?: "") {
+                    return
+                }
+                play(position)
+            }
+        })
         mTvPlayerInfoIntroduce.setOnClickListener {
             mIntroduceDialogFragment.show(childFragmentManager, "film_introduce_dialog")
         }
@@ -99,11 +128,8 @@ class PlayerInfoFragment : BaseRecyclerViewFragment<FilmBean>() {
         mVideoPlayer.isLockLand = false
         mVideoPlayer.isShowFullAnimation = false
         mVideoPlayer.isNeedLockFull = true
-
         mVideoPlayer.setVideoAllCallBack(mContext as PlayerActivity)
-
         (mContext as PlayerActivity).initOrientation()
-//        mVideoPlayer.backButton.setOnClickListener { finish() }
     }
 
     override fun onStop() {
@@ -113,7 +139,7 @@ class PlayerInfoFragment : BaseRecyclerViewFragment<FilmBean>() {
 
     override fun onResume() {
         super.onResume()
-        mVideoPlayer.currentPlayer.onVideoResume()
+        mVideoPlayer.currentPlayer.onVideoResume(false)
     }
 
     override fun onRequestStart(requestID: Int) {
@@ -124,10 +150,9 @@ class PlayerInfoFragment : BaseRecyclerViewFragment<FilmBean>() {
     }
 
     override fun onRefresh() {
-        super.onRefresh()
         mPresent.getDataByPost(
             0x0, getBaseParamsWithModAndAct(VIDEO_MODULE, VIDEO_DETAIL_ACT)
-                .addParam("vid", arguments?.getInt("vid"))
+                .addParam("vid", mVideoId)
         )
     }
 
@@ -148,45 +173,62 @@ class PlayerInfoFragment : BaseRecyclerViewFragment<FilmBean>() {
                 mAdList.addAll(tempAdList)
             }
 
-            mTvPlayerInfoName.text = mCurrentVideoInfo?.video_name
-            mTvPlayerInfoCrumbs.text = mCurrentVideoInfo?.video_crumbs
-            mTvPlayerInfoMenuCount.text = "全${mCurrentVideoInfo?.video_count}集"
-            mTvPlayerInfoMenuCount.setOnClickListener {
-                FragmentContainerActivity.from(mContext).setClazz(FilmMenuFragment::class.java).setTitle("剧集")
-                    .setNeedNetWorking(true).start()
-            }
-
-            mBaseAdapter.notifyDataSetChanged()
-
-            val playerList = arrayListOf<GSYSampleADVideoPlayer.GSYADVideoModel>()
-            if (!mAdList.isEmpty() && !mCollectionList.isEmpty()) {
-                playerList.add(
-                    GSYSampleADVideoPlayer.GSYADVideoModel(
-                        mAdList[0].ad_url,
-                        "",
-                        GSYSampleADVideoPlayer.GSYADVideoModel.TYPE_AD
-                    )
-                )
-                mCollectionList[0].isChecked = true
-                mCurrentVideoCollectionBean = mCollectionList[0]
-                playerList.add(
-                    GSYSampleADVideoPlayer.GSYADVideoModel(
-                        mCollectionList[0].collected_url,
-                        mCollectionList[0].collected_name,
-                        GSYSampleADVideoPlayer.GSYADVideoModel.TYPE_NORMAL
-                    )
-                )
-            }
-            mVideoPlayer.setAdUp(playerList, true, 0)
-            mMenuAdapter.notifyDataSetChanged()
             mIntroduceDialogFragment.setData(
                 mCurrentVideoInfo?.video_name,
                 mCurrentVideoInfo?.video_crumbs,
                 mCurrentVideoInfo?.video_desc,
                 mCurrentVideoInfo?.video_intro
             )
-            mVideoPlayer.startPlayLogic()
+
+            mTvPlayerInfoName.text = mCurrentVideoInfo?.video_name
+            mTvPlayerInfoCrumbs.text = mCurrentVideoInfo?.video_crumbs
+            mTvPlayerInfoMenuCount.text = "全${mCurrentVideoInfo?.video_count}集"
+            mTvPlayerInfoMenuCount.setOnClickListener {
+                FragmentContainerActivity.from(mContext).setClazz(FilmMenuFragment::class.java).setExtraBundle(
+                    bundleOf(
+                        Pair("collection", mCollectionList.size)
+                    )
+                ).setTitle("剧集")
+                    .setNeedNetWorking(true).start()
+            }
+            mBaseAdapter.notifyDataSetChanged()
+            play(0)
         }
+    }
+
+    private fun play(index: Int) {
+        val playerList = arrayListOf<GSYSampleADVideoPlayer.GSYADVideoModel>()
+        if (!mAdList.isEmpty() && !mCollectionList.isEmpty()) {
+            playerList.add(
+                GSYSampleADVideoPlayer.GSYADVideoModel(
+                    mAdList[0].ad_url,
+                    "",
+                    GSYSampleADVideoPlayer.GSYADVideoModel.TYPE_AD
+                )
+            )
+            mCollectionList.forEach { it.isChecked = false }
+            mCollectionList[index].isChecked = true
+            mCurrentVideoCollectionBean = mCollectionList[index]
+            playerList.add(
+                GSYSampleADVideoPlayer.GSYADVideoModel(
+                    mCollectionList[index].collected_url,
+                    mCollectionList[index].collected_name,
+                    GSYSampleADVideoPlayer.GSYADVideoModel.TYPE_NORMAL
+                )
+            )
+        }
+        mVideoPlayer.setAdUp(playerList, true, 0)
+        mMenuAdapter.notifyDataSetChanged()
+        val thumbImageView = ImageView(mContext)
+        GlideManager.loadImage(mContext, mCurrentVideoCollectionBean?.collected_pic, thumbImageView)
+        mVideoPlayer.thumbImageView = thumbImageView
+        mPresent.getDataByPost(
+            0x2,
+            getBaseParamsWithModAndAct(VIDEO_MODULE, VIDEO_PLAY_ACT).addParam(
+                "vid",
+                mCurrentVideoCollectionBean?.collected_id
+            )
+        )
     }
 
     override fun <T : Any?> onRequestSuccess(requestID: Int, result: T) {
@@ -195,9 +237,30 @@ class PlayerInfoFragment : BaseRecyclerViewFragment<FilmBean>() {
             if (check != null) {
                 toast((check.obj as JSONObject).optString(MSG_FLAG))
             }
+        } else if (requestID == 0x2) {
+            val check = checkResultCode(result)
+            if (check != null && check.code == SUCCESS_CODE) {
+                mVideoPlayer.startPlayLogic()
+            }
         } else {
             super.onRequestSuccess(requestID, result)
         }
+    }
+
+    override fun onMyItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
+        mVideoId = mArrayList[position].video_id
+        reset()
+        onRefresh()
+    }
+
+    private fun reset() {
+        mArrayList.clear()
+        mCollectionList.clear()
+        mAdList.clear()
+        mCurrentVideoInfo = null
+        mCurrentVideoCollectionBean = null
+        mBaseAdapter.notifyDataSetChanged()
+        mMenuAdapter.notifyDataSetChanged()
     }
 
     override fun showFailMessage(requestID: Int): String {
@@ -208,6 +271,7 @@ class PlayerInfoFragment : BaseRecyclerViewFragment<FilmBean>() {
     }
 
     override fun onDestroyView() {
+        unsubscribe(menuSubscription)
         mVideoPlayer.release()
         super.onDestroyView()
     }

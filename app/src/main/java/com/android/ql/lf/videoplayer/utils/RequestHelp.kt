@@ -19,6 +19,7 @@ const val VIDEO_LIST_ACT = "videoList"
 const val VIDEO_DETAIL_ACT = "videoDetail"
 const val VIDEO_WATCHING_ACT = "videoWatching"
 const val VIDEO_BELLE_ACT = "videoBelle"
+const val VIDEO_PLAY_ACT = "videoPlay"
 
 /**        用户登录模块        **/
 

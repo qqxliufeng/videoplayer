@@ -7,21 +7,23 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.android.ql.lf.baselibaray.ui.fragment.BaseRecyclerViewFragment
+import com.android.ql.lf.baselibaray.utils.RxBus
 import com.android.ql.lf.videoplayer.R
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import org.jetbrains.anko.backgroundColor
 
-class FilmMenuFragment : BaseRecyclerViewFragment<String>(){
+class FilmMenuFragment : BaseRecyclerViewFragment<String>() {
 
-    override fun createAdapter(): BaseQuickAdapter<String, BaseViewHolder>  = object : BaseQuickAdapter<String,BaseViewHolder>(R.layout.adapter_menu_item_2_layout,mArrayList){
-        override fun convert(helper: BaseViewHolder?, item: String?) {
-            helper?.setText(R.id.mCtvMenuItem,item)
+    override fun createAdapter(): BaseQuickAdapter<String, BaseViewHolder> =
+        object : BaseQuickAdapter<String, BaseViewHolder>(R.layout.adapter_menu_item_2_layout, mArrayList) {
+            override fun convert(helper: BaseViewHolder?, item: String?) {
+                helper?.setText(R.id.mCtvMenuItem, item)
+            }
         }
-    }
 
     override fun getLayoutManager(): RecyclerView.LayoutManager {
-        return GridLayoutManager(mContext,5)
+        return GridLayoutManager(mContext, 5)
     }
 
     override fun initView(view: View?) {
@@ -39,7 +41,16 @@ class FilmMenuFragment : BaseRecyclerViewFragment<String>(){
 
     override fun onRefresh() {
         super.onRefresh()
-        testAdd("")
+        onRequestEnd(-1)
+        (1..(arguments?.getInt("collection") ?: 1)).forEach {
+            mArrayList.add("$it")
+        }
+        mBaseAdapter.notifyDataSetChanged()
     }
 
+    override fun onMyItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
+        super.onMyItemClick(adapter, view, position)
+        RxBus.getDefault().post(mArrayList[position])
+        finish()
+    }
 }

@@ -56,12 +56,14 @@ fun UserInfo.jsonToUserInfo(json: JSONObject): Boolean {
     }
 }
 
+fun UserInfo.isVip() = user_vip == 1
+
 object UserInfo {
     var user_id: Int = -1
     var user_phone: String? = null
     var user_nickname: String? = null
     var user_pic: String? = null
-    var user_vip: Int = 0
+    var user_vip: Int = -1
 }
 
 object UserInfoLiveData : LiveData<UserInfo>() {

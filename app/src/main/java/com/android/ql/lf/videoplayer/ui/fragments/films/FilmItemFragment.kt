@@ -15,12 +15,21 @@ import com.android.ql.lf.baselibaray.ui.activity.FragmentContainerActivity
 import com.android.ql.lf.baselibaray.ui.fragment.AbstractLazyLoadFragment
 import com.android.ql.lf.baselibaray.utils.GlideManager
 import com.android.ql.lf.videoplayer.R
+import com.android.ql.lf.videoplayer.data.user.UserInfo
+import com.android.ql.lf.videoplayer.data.user.isLogin
+import com.android.ql.lf.videoplayer.data.user.isVip
 import com.android.ql.lf.videoplayer.data.vip.FilmBean
 import com.android.ql.lf.videoplayer.ui.activities.PlayerActivity
+import com.android.ql.lf.videoplayer.ui.fragments.mine.BillFragment
+import com.android.ql.lf.videoplayer.ui.fragments.mine.LoginFragment
+import com.android.ql.lf.videoplayer.ui.fragments.mine.RecordFragment
+import com.android.ql.lf.videoplayer.ui.fragments.mine.SelectLoginFragment
 import com.android.ql.lf.videoplayer.ui.fragments.other.SearchFragment
 import com.android.ql.lf.videoplayer.ui.fragments.player.PlayerInfoFragment
+import com.android.ql.lf.videoplayer.ui.fragments.vip.ChargeVipFragment
 import com.android.ql.lf.videoplayer.utils.VIDEO_LIST_ACT
 import com.android.ql.lf.videoplayer.utils.VIDEO_MODULE
+import com.android.ql.lf.videoplayer.utils.doClickWithUserStatusStart
 import com.android.ql.lf.videoplayer.utils.getBaseParamsWithPage
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
@@ -36,10 +45,18 @@ class FilmItemFragment : AbstractLazyLoadFragment<FilmBean>() {
     private val bannerList by lazy { arrayListOf<FilmBannerBean>() }
     private val noticeList by lazy { arrayListOf<FilmNoticeBean>() }
 
+    private val classify by lazy {
+        arguments?.getInt("classify") ?: 0
+    }
+
+    private val type by lazy {
+        arguments?.getInt("type") ?: 0
+    }
+
     companion object {
-        fun newInstance(bannerJSON: String, classify: Int): FilmItemFragment {
+        fun newInstance(bannerJSON: String, classify: Int,type:Int): FilmItemFragment {
             val filmItemFragment = FilmItemFragment()
-            val bundle = bundleOf(Pair("json", bannerJSON), Pair("classify", classify))
+            val bundle = bundleOf(Pair("json", bannerJSON), Pair("classify", classify), Pair("type",type))
             filmItemFragment.arguments = bundle
             return filmItemFragment
         }
@@ -61,9 +78,7 @@ class FilmItemFragment : AbstractLazyLoadFragment<FilmBean>() {
 
     override fun initView(view: View?) {
         super.initView(view)
-
         arguments?.classLoader = this.javaClass.classLoader
-
         arguments?.getString("json")?.apply {
             val jsonObject = JSONObject(this)
             val bannerJsonArray = jsonObject.optJSONArray("carousel")
@@ -75,7 +90,6 @@ class FilmItemFragment : AbstractLazyLoadFragment<FilmBean>() {
                     )
                 )
             }
-
             val noticeJsonArray = jsonObject.optJSONArray("notice")
             (0 until noticeJsonArray.length()).forEach {
                 noticeList.add(
@@ -100,6 +114,12 @@ class FilmItemFragment : AbstractLazyLoadFragment<FilmBean>() {
 
             mMarqueeViewFileItem.startWithList(noticeList.map { it.notice_name })
 
+            mIvFilmItemRecord.doClickWithUserStatusStart("") {
+                FragmentContainerActivity.from(mContext).setNeedNetWorking(true).setTitle("观看记录").setClazz(RecordFragment::class.java).start()
+            }
+            mIvFilmItemFavorite.doClickWithUserStatusStart(""){
+                FragmentContainerActivity.from(mContext).setNeedNetWorking(true).setTitle("我的看单").setClazz(BillFragment::class.java).start()
+            }
         }
 
         mAlFilmItemContainer.addOnOffsetChangedListener { appBarLayout, verticalOffset ->
@@ -114,7 +134,7 @@ class FilmItemFragment : AbstractLazyLoadFragment<FilmBean>() {
 
         mLlFilmItemSearchContainer.setOnClickListener {
             FragmentContainerActivity.from(mContext).setNeedNetWorking(true).setTitle("").setHiddenToolBar(true)
-                .setClazz(SearchFragment::class.java).start()
+                .setClazz(SearchFragment::class.java).setExtraBundle(bundleOf(Pair("classify",classify),Pair("type",type))).start()
         }
     }
 
@@ -133,7 +153,7 @@ class FilmItemFragment : AbstractLazyLoadFragment<FilmBean>() {
         isLoad = true
         mPresent.getDataByPost(
             0x0, getBaseParamsWithPage(VIDEO_MODULE, VIDEO_LIST_ACT, currentPage)
-                .addParam("classify", arguments?.getInt("classify") ?: 0)
+                .addParam("classify", classify)
         )
     }
 
@@ -160,17 +180,20 @@ class FilmItemFragment : AbstractLazyLoadFragment<FilmBean>() {
     }
 
     override fun onMyItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
-        PlayerActivity.startPlayerActivity(mContext, mArrayList[position].video_id)
-//        FragmentContainerActivity
-//                .from(mContext)
-//                .setNeedNetWorking(true)
-//                .setTitle("")
-//                .setExtraBundle(bundleOf(Pair("vid",mArrayList[position].video_id)))
-//                .setClazz(PlayerInfoFragment::class.java)
-//                .setHiddenToolBar(true)
-//                .start()
+        if (UserInfo.isLogin()) {
+            if (mArrayList[position].video_vip == 2) {
+                if (UserInfo.isVip()) {
+                    PlayerActivity.startPlayerActivity(mContext, mArrayList[position].video_id)
+                }else{
+                    ChargeVipFragment.startOpenVip(mContext)
+                }
+            }else{
+                PlayerActivity.startPlayerActivity(mContext, mArrayList[position].video_id)
+            }
+        } else {
+            SelectLoginFragment.startSelectLoginFragment(mContext)
+        }
     }
-
 }
 
 data class FilmBannerBean(

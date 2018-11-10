@@ -7,7 +7,7 @@ package com.android.ql.lf.videoplayer.data.film
 class BillBean {
     var bill_id: String? = null
     var bill_uid: String? = null
-    var bill_theme: String? = null
+    var bill_theme: Int? = null
     var bill_times: String? = null
     var bill_vid: String? = null
     var video_id: String? = null

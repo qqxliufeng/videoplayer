@@ -24,9 +24,9 @@ class PlayerActivity : BaseActivity(), VideoAllCallBack {
     }
 
     override fun onEnterFullscreen(url: String?, vararg objects: Any?) {
-        //隐藏调全屏对象的返回按键
-        val gsyVideoPlayer = objects[1] as GSYVideoPlayer
-        gsyVideoPlayer.backButton.visibility = View.GONE
+//        //隐藏调全屏对象的返回按键
+//        val gsyVideoPlayer = objects[1] as GSYVideoPlayer
+//        gsyVideoPlayer.backButton.visibility = View.GONE
     }
 
     override fun onClickResume(url: String?, vararg objects: Any?) {
@@ -134,7 +134,6 @@ class PlayerActivity : BaseActivity(), VideoAllCallBack {
             //直接横屏
             orientationUtils?.resolveByClick()
         }
-        //第一个true是否需要隐藏actionbar，第二个true是否需要隐藏statusbar
         playerFragment.getPlayer().startWindowFullscreen(
             this,
             true,

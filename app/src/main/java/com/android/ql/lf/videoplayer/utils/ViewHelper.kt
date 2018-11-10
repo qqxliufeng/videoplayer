@@ -1,11 +1,14 @@
 package com.android.ql.lf.videoplayer.utils
 
+import android.content.Context
 import android.support.design.widget.Snackbar
+import android.support.v4.app.Fragment
 import android.text.Editable
 import android.text.Html
 import android.text.TextUtils
 import android.text.TextWatcher
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.TextView
 import com.android.ql.lf.videoplayer.R
@@ -115,6 +118,12 @@ fun View.doClickWithUserStatusStart(token: String, action: (view: View) -> Unit)
             SelectLoginFragment.startSelectLoginFragment(this.context)
         }
     }
+}
+
+fun Fragment.hiddenSoftInput(view: View){
+    val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    imm.showSoftInput(view,InputMethodManager.SHOW_FORCED)
+    imm.hideSoftInputFromWindow(view.windowToken, 0)
 }
 
 //fun View.doClickWithUseStatusEnd() {

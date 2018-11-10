@@ -14,6 +14,7 @@ import com.android.ql.lf.baselibaray.utils.GlideManager
 import com.android.ql.lf.videoplayer.R
 import com.android.ql.lf.videoplayer.data.girls.GirlsAdBean
 import com.android.ql.lf.videoplayer.data.girls.GirlsBean
+import com.android.ql.lf.videoplayer.ui.fragments.other.WebViewFragment
 import com.android.ql.lf.videoplayer.utils.VIDEO_BELLE_ACT
 import com.android.ql.lf.videoplayer.utils.VIDEO_MODULE
 import com.android.ql.lf.videoplayer.utils.fromJson
@@ -77,10 +78,14 @@ class BottomGirlsFragment : BaseRecyclerViewFragment<GirlsBean>() {
             if (check != null && check.code == SUCCESS_CODE) {
                 mGirlsAdBean = Gson().fromJson<GirlsAdBean>((check.obj as JSONObject).optJSONObject("arr").toString())
                 GlideManager.loadImage(mContext, mGirlsAdBean?.bellead_pic ?: "", mIvGirlTopAd)
-                mIvGirlTopAd.setOnClickListener {  }
+                mIvGirlTopAd.setOnClickListener {
+                    WebViewFragment.startWebViewFragment(mContext,mGirlsAdBean?.bellead_picurl ?: "")
+                }
                 GlideManager.loadFaceCircleImage(mContext, mGirlsAdBean?.bellead_bellepic ?: "", mIvGirlBottomAdUserFace)
                 mTvGirlBottomAdUserNickName.text = mGirlsAdBean?.bellead_bellename ?: ""
-                mRlGirlBottomAdContainer.setOnClickListener {  }
+                mRlGirlBottomAdContainer.setOnClickListener {
+                    WebViewFragment.startWebViewFragment(mContext,mGirlsAdBean?.bellead_belleurl ?: "")
+                }
             }
         }
     }
@@ -93,6 +98,11 @@ class BottomGirlsFragment : BaseRecyclerViewFragment<GirlsBean>() {
         val itemDecoration = super.getItemDecoration() as DividerItemDecoration
         itemDecoration.setDrawable(ColorDrawable(Color.TRANSPARENT))
         return itemDecoration
+    }
+
+    override fun onMyItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
+        super.onMyItemClick(adapter, view, position)
+        WebViewFragment.startWebViewFragment(mContext,mArrayList[position].belle_url ?: "")
     }
 
 }

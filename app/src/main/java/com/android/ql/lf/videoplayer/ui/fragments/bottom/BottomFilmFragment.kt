@@ -28,7 +28,7 @@ class BottomFilmFragment : BaseNetWorkingFragment() {
     override fun initView(view: View?) {
         (mTlFilmNavigation.layoutParams as ViewGroup.MarginLayoutParams).topMargin = statusBarHeight
         mVpFilmViewPager.adapter = FilmViewPagerAdapter(childFragmentManager)
-        mVpFilmViewPager.offscreenPageLimit = titles.size
+        mVpFilmViewPager.offscreenPageLimit = 3
         mTlFilmNavigation.setupWithViewPager(mVpFilmViewPager)
         mPresent.getDataByPost(0x0, getBaseParamsWithModAndAct(VIDEO_MODULE,VIDEO_NAV_ACT))
     }
@@ -51,7 +51,7 @@ class BottomFilmFragment : BaseNetWorkingFragment() {
 
     inner class FilmViewPagerAdapter(fragmentManager: FragmentManager) : FragmentStatePagerAdapter(fragmentManager) {
 
-        override fun getItem(position: Int) = FilmItemFragment.newInstance(json,titles[position].classify_id)
+        override fun getItem(position: Int) = FilmItemFragment.newInstance(json,titles[position].classify_id,titles[position].classify_type)
 
         override fun getCount() = titles.size
 
@@ -59,5 +59,5 @@ class BottomFilmFragment : BaseNetWorkingFragment() {
     }
 }
 
-data class FilmMenuBean(val classify_id: Int, val classify_name: String, val classify_is_show: String, val classify_times: String)
+data class FilmMenuBean(val classify_id: Int, val classify_name: String, val classify_is_show: String, val classify_times: String,val classify_type:Int)
 
