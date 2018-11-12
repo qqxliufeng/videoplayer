@@ -36,30 +36,50 @@ class SearchFragment : BaseRecyclerViewFragment<FilmBean>() {
                 helper?.setText(R.id.mTvSearchItemTitle, item?.video_name)
                 helper?.setText(R.id.mTvSearchItemDes, item?.video_desc)
                 helper?.addOnClickListener(R.id.mBtSearchItemPlay)
-                when (item?.video_type){
-                    3->{ // 综艺
-                        helper?.setGone(R.id.mFlSearchItemCollection,true)
-                        addItem(helper,item,ViewGroup.LayoutParams.WRAP_CONTENT)
+                when (item?.video_type) {
+                    2 -> { // 综艺
+                        if (item.video_gather!=null && item.video_gather.size > 3) {
+                            helper?.setGone(R.id.mTvSearchItemCollectionSeeMore, true)
+                        }else{
+                            helper?.setGone(R.id.mTvSearchItemCollectionSeeMore, false)
+                        }
+                        helper?.setGone(R.id.mFlSearchItemCollection, true)
+                        addItem(helper, item, ViewGroup.LayoutParams.MATCH_PARENT)
                     }
-                    2->{// 电视剧
-                        helper?.setGone(R.id.mFlSearchItemCollection,true)
-                        addItem(helper,item,ViewGroup.LayoutParams.MATCH_PARENT)
+                    1 -> {// 电视剧
+                        if (item.video_gather!=null && item.video_gather.size > 3) {
+                            helper?.setGone(R.id.mTvSearchItemCollectionSeeMore, true)
+                        }else{
+                            helper?.setGone(R.id.mTvSearchItemCollectionSeeMore, false)
+                        }
+                        helper?.setGone(R.id.mFlSearchItemCollection, true)
+                        addItem(helper, item, ViewGroup.LayoutParams.WRAP_CONTENT)
                     }
-                    else ->{
-                        helper?.setGone(R.id.mFlSearchItemCollection,false)
+                    else -> {
+                        helper?.setGone(R.id.mTvSearchItemCollectionSeeMore, false)
+                        helper?.setGone(R.id.mFlSearchItemCollection, false)
                     }
                 }
             }
 
-            fun addItem(helper:BaseViewHolder?,item:FilmBean,width:Int){
+            fun addItem(helper: BaseViewHolder?, item: FilmBean, width: Int) {
                 item.video_gather.forEach {
                     val textView = TextView(mContext)
-                    val params = FlexboxLayout.LayoutParams(width,ViewGroup.LayoutParams.WRAP_CONTENT)
-                    params.leftMargin = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,5.0f,resources.displayMetrics).toInt()
-                    params.rightMargin = params.leftMargin
+                    val params = FlexboxLayout.LayoutParams(width, ViewGroup.LayoutParams.WRAP_CONTENT)
+                    if (width == ViewGroup.LayoutParams.WRAP_CONTENT) {
+                        params.leftMargin =
+                                TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5.0f, resources.displayMetrics)
+                                    .toInt()
+                        params.rightMargin = params.leftMargin
+                    } else {
+                        params.topMargin =
+                                TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5.0f, resources.displayMetrics)
+                                    .toInt()
+                        params.bottomMargin = params.topMargin
+                    }
                     textView.layoutParams = params
                     textView.setBackgroundResource(R.drawable.shape_ctv_bg1)
-                    textView.setTextColor(ContextCompat.getColor(mContext,R.color.grayTextColor))
+                    textView.setTextColor(ContextCompat.getColor(mContext, R.color.grayTextColor))
                     textView.text = it.collected_name
                     helper?.getView<FlexboxLayout>(R.id.mFlSearchItemCollection)?.addView(textView)
                 }
@@ -155,10 +175,10 @@ class SearchFragment : BaseRecyclerViewFragment<FilmBean>() {
                 if (mArrayList[position].video_vip == 2) {
                     if (UserInfo.isVip()) {
                         PlayerActivity.startPlayerActivity(mContext, mArrayList[position].video_id)
-                    }else{
+                    } else {
                         ChargeVipFragment.startOpenVip(mContext)
                     }
-                }else{
+                } else {
                     PlayerActivity.startPlayerActivity(mContext, mArrayList[position].video_id)
                 }
             } else {
